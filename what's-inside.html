@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Inside? - Mystery Box Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .nav-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            display: block;
+            text-decoration: none;
+            color: #333;
+            transition: background 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .dropdown-item:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 400px);
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .mystery-box-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .mystery-box {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(145deg, #ff6b6b, #ee5a6f);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .mystery-box:hover {
+            transform: scale(1.05);
+        }
+
+        .mystery-box::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #ffd93d;
+            transform: translateY(-50%);
+        }
+
+        .mystery-box::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            background: #ffd93d;
+            transform: translateX(-50%);
+        }
+
+        .mystery-box .bow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #ffd93d;
+            border-radius: 50%;
+        }
+
+        .mystery-box .bow::before,
+        .mystery-box .bow::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ffd93d;
+            border-radius: 50%;
+            top: 10px;
+        }
+
+        .mystery-box .bow::before {
+            left: -30px;
+        }
+
+        .mystery-box .bow::after {
+            right: -30px;
+        }
+
+        .mystery-box .question-mark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .revealed-product {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .revealed-product.show {
+            display: flex;
+        }
+
+        .product-image {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-name {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            pointer-events: none;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .buy-button:hover {
+            transform: scale(1.02);
+        }
+
+        .buy-button:active {
+            transform: scale(0.98);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* About Page */
+        .about-content {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .about-content h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .about-content h3 {
+            font-size: 24px;
+            color: #333;
+            margin: 30px 0 15px;
+        }
+
+        /* Contact Page */
+        .contact-content {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .submit-button:hover {
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 50px 30px 30px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .header-title {
+                font-size: 32px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content,
+            .contact-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="showPage('home')">
+                <div class="nav-logo-icon">📦</div>
+                <h1>What's Inside?</h1>
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link">Categories ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Tech & Gadgets</a>
+                        <a href="#" class="dropdown-item">Fashion & Style</a>
+                        <a href="#" class="dropdown-item">Gaming</a>
+                        <a href="#" class="dropdown-item">Beauty & Wellness</a>
+                        <a href="#" class="dropdown-item">Fitness & Sports</a>
+                        <a href="#" class="dropdown-item">Food & Drinks</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                <li class="nav-item cart-icon">
+                    <a class="nav-link">🛒</a>
+                    <span class="cart-count">0</span>
+                </li>
+            </ul>
+
+            <div class="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page-section active">
+            <header>
+                <h2 class="header-title">Unbox the Mystery!</h2>
+                <p class="tagline">Discover amazing surprises in every box</p>
+            </header>
+
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <h2 class="product-title">Tech Mystery Box</h2>
+                    <p class="product-price">$49.99</p>
+                    <div class="mystery-box-container" id="container-1">
+                        <div class="mystery-box" onclick="revealBox(1)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-1">
+                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
+                            <div class="product-name">Premium Wireless Headphones</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <h2 class="product-title">Fashion Mystery Box</h2>
+                    <p class="product-price">$39.99</p>
+                    <div class="mystery-box-container" id="container-2">
+                        <div class="mystery-box" onclick="revealBox(2)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-2">
+                            <div class="product-image">
+                                <img src="sony-mx5.jpeg" alt="Product Name" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+                            </div>
+                            <div class="product-name">Designer Sunglasses</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <h2 class="product-title">Gaming Mystery Box</h2>
+                    <p class="product-price">$59.99</p>
+                    <div class="mystery-box-container" id="container-3">
+                        <div class="mystery-box" onclick="revealBox(3)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-3">
+                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
+                            <div class="product-name">Mechanical Gaming Keyboard</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <h2 class="product-title">Beauty Mystery Box</h2>
+                    <p class="product-price">$29.99</p>
+                    <div class="mystery-box-container" id="container-4">
+                        <div class="mystery-box" onclick="revealBox(4)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-4">
+                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
+                            <div class="product-name">Luxury Skincare Set</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <h2 class="product-title">Fitness Mystery Box</h2>
+                    <p class="product-price">$44.99</p>
+                    <div class="mystery-box-container" id="container-5">
+                        <div class="mystery-box" onclick="revealBox(5)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-5">
+                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
+                            <div class="product-name">Smart Fitness Tracker</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <h2 class="product-title">Gourmet Mystery Box</h2>
+                    <p class="product-price">$34.99</p>
+                    <div class="mystery-box-container" id="container-6">
+                        <div class="mystery-box" onclick="revealBox(6)">
+                            <div class="bow"></div>
+                            <div class="question-mark">?</div>
+                        </div>
+                        <div class="revealed-product" id="revealed-6">
+                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
+                            <div class="product-name">Artisan Coffee Collection</div>
+                        </div>
+                    </div>
+                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page-section">
+            <div class="about-content">
+                <h2>About What's Inside?</h2>
+                <p>Welcome to What's Inside? - your premier destination for mystery boxes filled with exciting products and surprises!</p>
+                
+                <p>Founded in 2024, we believe that shopping should be an adventure. That's why we've created a unique e-commerce experience where every purchase is a thrilling mystery waiting to be unboxed.</p>
+
+                <h3>Our Mission</h3>
+                <p>Our mission is to bring joy, excitement, and unexpected delight to our customers through carefully curated mystery boxes. We partner with top brands and emerging creators to ensure that every box contains high-quality products that exceed expectations.</p>
+
+                <h3>Why Choose Us?</h3>
+                <p>✨ <strong>Quality Guaranteed:</strong> Every product in our mystery boxes is handpicked for quality and value.</p>
+                <p>🎁 <strong>Surprise & Delight:</strong> Experience the thrill of unboxing something completely unexpected.</p>
+                <p>💎 <strong>Great Value:</strong> Get premium products at mystery box prices - always worth more than you pay!</p>
+                <p>🚚 <strong>Fast Shipping:</strong> We ship worldwide and ensure your mystery arrives quickly and safely.</p>
+
+                <h3>Join Our Community</h3>
+                <p>Become part of thousands of mystery box enthusiasts who share their unboxing experiences and discoveries. Follow us on social media to see what others have found in their boxes!</p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page-section">
+            <div class="contact-content">
+                <h2 style="font-size: 36px; margin-bottom: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Get In Touch</h2>
+                <p style="margin-bottom: 30px; color: #666;">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                
+                <form class="contact-form" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" placeholder="What is this about?" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Your message..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>What's Inside?</h3>
+                <p>Your premier destination for mystery boxes filled with exciting products and surprises. Join thousands of happy customers who love the thrill of unboxing!</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">📺</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li><a href="#">Shop All Boxes</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Tech & Gadgets</a></li>
+                    <li><a href="#">Fashion & Style</a></li>
+                    <li><a href="#">Gaming</a></li>
+                    <li><a href="#">Beauty & Wellness</a></li>
+                    <li><a href="#">Fitness & Sports</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 What's Inside? All rights reserved. | Designed with 💜 for mystery lovers</p>
+        </div>
+    </footer>
+
+    <script>
+        let cartCount = 0;
+
+        function createConfetti(container) {
+            const colors = ['#ff6b6b', '#ffd93d', '#6bcf7f', '#4d96ff', '#ff8c42', '#e84393'];
+            const confettiCount = 50;
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '50%';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                container.appendChild(confetti);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 200 + 100;
+                const xVel = Math.cos(angle) * velocity;
+                const yVel = Math.sin(angle) * velocity;
+
+                animateConfetti(confetti, xVel, yVel);
+            }
+        }
+
+        function animateConfetti(element, xVel, yVel) {
+            let x = 0;
+            let y = 0;
+            let opacity = 1;
+            const gravity = 500;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = (Date.now() - startTime) / 1000;
+                x = xVel * elapsed;
+                y = yVel * elapsed + 0.5 * gravity * elapsed * elapsed;
+                opacity = Math.max(0, 1 - elapsed / 2);
+
+                element.style.transform = `translate(${x}px, ${y}px) rotate(${elapsed * 360}deg)`;
+                element.style.opacity = opacity;
+
+                if (opacity > 0) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.remove();
+                }
+            }
+
+            update();
+        }
+
+        function revealBox(id) {
+            const container = document.getElementById('container-' + id);
+            const box = container.querySelector('.mystery-box');
+            const revealed = document.getElementById('revealed-' + id);
+
+            if (box.classList.contains('hidden')) return;
+
+            createConfetti(container);
+
+            setTimeout(() => {
+                box.classList.add('hidden');
+                revealed.classList.add('show');
+            }, 500);
+        }
+
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageName);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function addToCart() {
+            cartCount++;
+            document.querySelector('.cart-count').textContent = cartCount;
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Added!';
+            button.style.background = '#6bcf7f';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+            }, 2000);
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
