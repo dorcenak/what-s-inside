@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #000000;
             min-height: 100vh;
         }
 
@@ -188,6 +188,68 @@
             opacity: 0.95;
         }
 
+        /* How It Works Section */
+        .how-it-works {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .how-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .how-it-works h2 {
+            font-size: 40px;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            background: white;
+            color: #764ba2;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .step p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
         /* Main Content */
         main {
             min-height: calc(100vh - 400px);
@@ -201,25 +263,102 @@
             display: block;
         }
 
-        .products-grid {
+        /* Section Headers */
+        .section-header {
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 50px auto 30px;
+            padding: 0 30px;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '🔥';
+            font-size: 40px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Hottest Items Grid */
+        .hottest-grid {
+            max-width: 1400px;
+            margin: 0 auto 80px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             padding: 0 30px;
         }
 
+        /* Category Sections */
+        .category-section {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .category-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card */
         .product-card {
             background: white;
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ffd93d, #ff8c42);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .tier-badge.silver {
+            background: linear-gradient(135deg, #e0e0e0, #b0b0b0);
+        }
+
+        .tier-badge.gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+        }
+
+        .tier-badge.platinum {
+            background: linear-gradient(135deg, #e5e4e2, #a8a8a8);
         }
 
         .product-title {
@@ -230,10 +369,24 @@
         }
 
         .product-price {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .product-stats {
+            display: flex;
+            gap: 20px;
             margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .mystery-box-container {
@@ -314,6 +467,82 @@
             right: -30px;
         }
 
+        /* Bronze Tier Boxes */
+        .mystery-box.bronze {
+            background: linear-gradient(145deg, #cd7f32, #b87333);
+        }
+
+        .mystery-box.bronze::before,
+        .mystery-box.bronze::after {
+            background: #8b4513;
+        }
+
+        .mystery-box.bronze .bow {
+            background: #8b4513;
+        }
+
+        .mystery-box.bronze .bow::before,
+        .mystery-box.bronze .bow::after {
+            background: #8b4513;
+        }
+
+        /* Silver Tier Boxes */
+        .mystery-box.silver {
+            background: linear-gradient(145deg, #c0c0c0, #a8a8a8);
+        }
+
+        .mystery-box.silver::before,
+        .mystery-box.silver::after {
+            background: #808080;
+        }
+
+        .mystery-box.silver .bow {
+            background: #808080;
+        }
+
+        .mystery-box.silver .bow::before,
+        .mystery-box.silver .bow::after {
+            background: #808080;
+        }
+
+        /* Gold/Premium Tier Boxes */
+        .mystery-box.gold {
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+        }
+
+        .mystery-box.gold::before,
+        .mystery-box.gold::after {
+            background: #ff8c42;
+        }
+
+        .mystery-box.gold .bow {
+            background: #ff8c42;
+        }
+
+        .mystery-box.gold .bow::before,
+        .mystery-box.gold .bow::after {
+            background: #ff8c42;
+        }
+
+        /* Platinum Tier Boxes */
+        .mystery-box.platinum {
+            background: linear-gradient(145deg, #e5e4e2, #d4d4d4);
+        }
+
+        .mystery-box.platinum::before,
+        .mystery-box.platinum::after {
+            background: #9370db;
+        }
+
+        .mystery-box.platinum .bow {
+            background: #9370db;
+        }
+
+        .mystery-box.platinum .bow::before,
+        .mystery-box.platinum .bow::after {
+            background: #9370db;
+        }
+
         .mystery-box .question-mark {
             position: absolute;
             top: 50%;
@@ -353,6 +582,13 @@
             text-align: center;
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
         }
 
         .product-name {
@@ -592,7 +828,8 @@
                 font-size: 32px;
             }
 
-            .products-grid {
+            .hottest-grid,
+            .tier-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -617,12 +854,12 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link">Categories ▾</a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Tech & Gadgets</a>
-                        <a href="#" class="dropdown-item">Fashion & Style</a>
-                        <a href="#" class="dropdown-item">Gaming</a>
-                        <a href="#" class="dropdown-item">Beauty & Wellness</a>
-                        <a href="#" class="dropdown-item">Fitness & Sports</a>
-                        <a href="#" class="dropdown-item">Food & Drinks</a>
+                        <a href="#" class="dropdown-item">Electronics</a>
+                        <a href="#" class="dropdown-item">Fashion & Shoes</a>
+                        <a href="#" class="dropdown-item">Kitchen</a>
+                        <a href="#" class="dropdown-item">Toys</a>
+                        <a href="#" class="dropdown-item">Jewelry</a>
+                        <a href="#" class="dropdown-item">Clothes</a>
                     </div>
                 </li>
                 <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
@@ -650,114 +887,312 @@
                 <p class="tagline">Discover amazing surprises in every box</p>
             </header>
 
-            <div class="products-grid">
-                <!-- Product 1 -->
+            <!-- How It Works Section -->
+            <section class="how-it-works">
+                <div class="how-container">
+                    <h2>How to Get Your Box 🎁</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <h3>Click to Open Your Box</h3>
+                            <p>Tap any mystery box to reveal what’s inside — every click brings a new surprise!</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <h3>Choose What to Do Next</h3>
+                            <p>If you win, you can either drop your item with a special discount or trade it by buying another unopened box.</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <h3>Ship It to Your Door</h3>
+                            <p>Once you finish your selections, your final mystery prize will be shipped directly to you!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Hottest Items Section -->
+            <div class="section-header">
+                <h2 class="section-title">Hottest Items</h2>
+                <p class="section-subtitle">Most popular boxes flying off the shelves!</p>
+            </div>
+
+            <div class="hottest-grid">
+                <!-- Electronics Hot Item -->
                 <div class="product-card">
-                    <h2 class="product-title">Tech Mystery Box</h2>
-                    <p class="product-price">$49.99</p>
-                    <div class="mystery-box-container" id="container-1">
-                        <div class="mystery-box" onclick="revealBox(1)">
+                    <div class="tier-badge gold">Premium</div>
+                    <h2 class="product-title">Tech Surprise Box</h2>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-stats">
+                        <span class="stat">👥 324 purchased</span>
+                        <span class="stat">⭐ 4.8/5</span>
+                    </div>
+                    <div class="mystery-box-container" id="container-hot-1">
+                        <div class="mystery-box" onclick="revealBox('hot-1')">
                             <div class="bow"></div>
                             <div class="question-mark">?</div>
                         </div>
-                        <div class="revealed-product" id="revealed-1">
-                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
-                            <div class="product-name">Premium Wireless Headphones</div>
+                        <div class="revealed-product" id="revealed-hot-1">
+                            <div class="product-image">Premium Electronics<br>(Add your image)</div>
+                            <div class="product-name">Wireless Earbuds Pro</div>
                         </div>
                     </div>
                     <button class="buy-button" onclick="addToCart()">Add to Cart</button>
                 </div>
 
-                <!-- Product 2 -->
+                <!-- Fashion Hot Item -->
                 <div class="product-card">
-                    <h2 class="product-title">Fashion Mystery Box</h2>
-                    <p class="product-price">$39.99</p>
-                    <div class="mystery-box-container" id="container-2">
-                        <div class="mystery-box" onclick="revealBox(2)">
+                    <div class="tier-badge gold">Premium</div>
+                    <h2 class="product-title">Fashion Kicks Box</h2>
+                    <p class="product-price">$89.99</p>
+                    <div class="product-stats">
+                        <span class="stat">👥 512 purchased</span>
+                        <span class="stat">⭐ 4.9/5</span>
+                    </div>
+                    <div class="mystery-box-container" id="container-hot-2">
+                        <div class="mystery-box" onclick="revealBox('hot-2')">
                             <div class="bow"></div>
                             <div class="question-mark">?</div>
                         </div>
-                        <div class="revealed-product" id="revealed-2">
-                            <div class="product-image">
-                                <img src="sony-mx5.jpeg" alt="Product Name" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
-                            </div>
-                            <div class="product-name">Designer Sunglasses</div>
+                        <div class="revealed-product" id="revealed-hot-2">
+                            <div class="product-image">Designer Shoes<br>(Add your image)</div>
+                            <div class="product-name">Premium Sneakers</div>
                         </div>
                     </div>
                     <button class="buy-button" onclick="addToCart()">Add to Cart</button>
                 </div>
 
-                <!-- Product 3 -->
+                <!-- Kitchen Hot Item -->
                 <div class="product-card">
-                    <h2 class="product-title">Gaming Mystery Box</h2>
-                    <p class="product-price">$59.99</p>
-                    <div class="mystery-box-container" id="container-3">
-                        <div class="mystery-box" onclick="revealBox(3)">
-                            <div class="bow"></div>
-                            <div class="question-mark">?</div>
-                        </div>
-                        <div class="revealed-product" id="revealed-3">
-                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
-                            <div class="product-name">Mechanical Gaming Keyboard</div>
-                        </div>
+                    <div class="tier-badge gold">Premium</div>
+                    <h2 class="product-title">Kitchen Essentials Box</h2>
+                    <p class="product-price">$79.99</p>
+                    <div class="product-stats">
+                        <span class="stat">👥 287 purchased</span>
+                        <span class="stat">⭐ 4.7/5</span>
                     </div>
-                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <h2 class="product-title">Beauty Mystery Box</h2>
-                    <p class="product-price">$29.99</p>
-                    <div class="mystery-box-container" id="container-4">
-                        <div class="mystery-box" onclick="revealBox(4)">
+                    <div class="mystery-box-container" id="container-hot-3">
+                        <div class="mystery-box" onclick="revealBox('hot-3')">
                             <div class="bow"></div>
                             <div class="question-mark">?</div>
                         </div>
-                        <div class="revealed-product" id="revealed-4">
-                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
-                            <div class="product-name">Luxury Skincare Set</div>
-                        </div>
-                    </div>
-                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <h2 class="product-title">Fitness Mystery Box</h2>
-                    <p class="product-price">$44.99</p>
-                    <div class="mystery-box-container" id="container-5">
-                        <div class="mystery-box" onclick="revealBox(5)">
-                            <div class="bow"></div>
-                            <div class="question-mark">?</div>
-                        </div>
-                        <div class="revealed-product" id="revealed-5">
-                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
-                            <div class="product-name">Smart Fitness Tracker</div>
-                        </div>
-                    </div>
-                    <button class="buy-button" onclick="addToCart()">Add to Cart</button>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <h2 class="product-title">Gourmet Mystery Box</h2>
-                    <p class="product-price">$34.99</p>
-                    <div class="mystery-box-container" id="container-6">
-                        <div class="mystery-box" onclick="revealBox(6)">
-                            <div class="bow"></div>
-                            <div class="question-mark">?</div>
-                        </div>
-                        <div class="revealed-product" id="revealed-6">
-                            <div class="product-image">Your Product Image Here<br>(200x200px)</div>
-                            <div class="product-name">Artisan Coffee Collection</div>
+                        <div class="revealed-product" id="revealed-hot-3">
+                            <div class="product-image">Kitchen Gadget<br>(Add your image)</div>
+                            <div class="product-name">Smart Kitchen Tool</div>
                         </div>
                     </div>
                     <button class="buy-button" onclick="addToCart()">Add to Cart</button>
                 </div>
             </div>
-        </div>
 
-        <!-- About Page -->
+            <!-- Electronics Category -->
+            <div class="category-section">
+                <h2 class="category-title">📱 Electronics</h2>
+                <div class="tier-grid">
+                    <!-- Bronze Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge">Bronze</div>
+                        <h2 class="product-title">Starter Tech Box</h2>
+                        <p class="product-price">$49.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 156 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-elec-1-1">
+                            <div class="mystery-box bronze" onclick="revealBox('elec-1-1')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-elec-1-1">
+                                <div class="product-image">Tech Accessory<br>(Add your image)</div>
+                                <div class="product-name">Phone Accessories</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Silver Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge silver">Silver</div>
+                        <h2 class="product-title">Advanced Tech Box</h2>
+                        <p class="product-price">$149.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 203 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-elec-1-2">
+                            <div class="mystery-box silver" onclick="revealBox('elec-1-2')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-elec-1-2">
+                                <div class="product-image">Premium Tech<br>(Add your image)</div>
+                                <div class="product-name">Smart Watch</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Platinum Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge platinum">Platinum</div>
+                        <h2 class="product-title">Ultimate Tech Box</h2>
+                        <p class="product-price">$299.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 89 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-elec-1-3">
+                            <div class="mystery-box platinum" onclick="revealBox('elec-1-3')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-elec-1-3">
+                                <div class="product-image">Elite Electronics<br>(Add your image)</div>
+                                <div class="product-name">Premium Tablet</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+<!-- Shoes Category -->
+            <div class="category-section">
+                <h2 class="category-title">👟 Shoes</h2>
+                <div class="tier-grid">
+                    <!-- Bronze Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge">Bronze</div>
+                        <h2 class="product-title">Casual Kicks Box</h2>
+                        <p class="product-price">$59.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 298 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-shoes-1">
+                            <div class="mystery-box bronze" onclick="revealBox('shoes-1')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-shoes-1">
+                                <div class="product-image">Casual Shoes<br>(Add your image)</div>
+                                <div class="product-name">Everyday Sneakers</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Silver Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge silver">Silver</div>
+                        <h2 class="product-title">Athletic Pro Box</h2>
+                        <p class="product-price">$119.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 421 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-shoes-2">
+                            <div class="mystery-box silver" onclick="revealBox('shoes-2')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-shoes-2">
+                                <div class="product-image">Sport Shoes<br>(Add your image)</div>
+                                <div class="product-name">Performance Trainers</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Platinum Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge platinum">Platinum</div>
+                        <h2 class="product-title">Designer Footwear Box</h2>
+                        <p class="product-price">$279.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 167 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-shoes-3">
+                            <div class="mystery-box platinum" onclick="revealBox('shoes-3')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-shoes-3">
+                                <div class="product-image">Luxury Shoes<br>(Add your image)</div>
+                                <div class="product-name">Premium Designer Sneakers</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Jewelry Category -->
+            <div class="category-section">
+                <h2 class="category-title">💎 Jewelry</h2>
+                <div class="tier-grid">
+                    <!-- Bronze Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge">Bronze</div>
+                        <h2 class="product-title">Fashion Jewelry Box</h2>
+                        <p class="product-price">$44.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 342 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-jewelry-1">
+                            <div class="mystery-box bronze" onclick="revealBox('jewelry-1')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-jewelry-1">
+                                <div class="product-image">Fashion Jewelry<br>(Add your image)</div>
+                                <div class="product-name">Trendy Accessories</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Silver Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge silver">Silver</div>
+                        <h2 class="product-title">Sterling Silver Box</h2>
+                        <p class="product-price">$159.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 219 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-jewelry-2">
+                            <div class="mystery-box silver" onclick="revealBox('jewelry-2')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-jewelry-2">
+                                <div class="product-image">Silver Jewelry<br>(Add your image)</div>
+                                <div class="product-name">Sterling Silver Piece</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+
+                    <!-- Platinum Tier -->
+                    <div class="product-card">
+                        <div class="tier-badge platinum">Platinum</div>
+                        <h2 class="product-title">Fine Jewelry Box</h2>
+                        <p class="product-price">$399.99</p>
+                        <div class="product-stats">
+                            <span class="stat">👥 78 purchased</span>
+                        </div>
+                        <div class="mystery-box-container" id="container-jewelry-3">
+                            <div class="mystery-box platinum" onclick="revealBox('jewelry-3')">
+                                <div class="bow"></div>
+                                <div class="question-mark">?</div>
+                            </div>
+                            <div class="revealed-product" id="revealed-jewelry-3">
+                                <div class="product-image">Fine Jewelry<br>(Add your image)</div>
+                                <div class="product-name">Gold & Diamond Piece</div>
+                            </div>
+                        </div>
+                        <button class="buy-button" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+ <!-- About Page -->
         <div id="about" class="page-section">
             <div class="about-content">
                 <h2>About What's Inside?</h2>
